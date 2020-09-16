@@ -4,6 +4,8 @@ import java.io.IOException;
 
 public class main {
     public static void main(String[] args) throws IOException {
-        com.company.WebParser.parse(177013);
+        int lol = 48450;
+        for (int i=48440;i<lol;i++)
+        WebParser.parse(i);
     }
 }
