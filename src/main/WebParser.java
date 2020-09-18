@@ -36,15 +36,12 @@ public class WebParser {
                 if (lol == null) System.out.println("ERROR no picture!!!");
 
                 createFolder(path + "["+ mangaNumber+"]"+  mangaName.text());
-                //
                 Element lol2 = lol31.last();
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
                 DownloadFile(absoluteUrl, path + "["+mangaNumber+"]" + mangaName.text() + "\\" + i + ".jpg"); // Images to download
-                //
             }
         }
-
     }
 
     public static void setLastNumberFromFile(int num,String path) throws IOException {
@@ -74,7 +71,6 @@ public class WebParser {
             e.printStackTrace();
         }
     }
-
 
     public static void createFolder(String name){
         File folder = new File(name);
