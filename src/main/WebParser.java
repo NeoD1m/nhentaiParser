@@ -35,13 +35,13 @@ public class WebParser {
                 Elements lol = doc1.getElementsContainingText("https://i.nhentai.net/galleries/");
                 if (lol == null) System.out.println("ERROR no picture!!!");
 
-                createFolder((path + "["+mangaNumber+"] "+  mangaName.text()));
-
+                createFolder(path + "["+ mangaNumber+"]"+  mangaName.text());
+                //
                 Element lol2 = lol31.last();
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
-                DownloadFile(absoluteUrl, path + "["+mangaNumber+"] "+ mangaName.text() + "\\" + i + ".jpg"); // Images to download
-
+                DownloadFile(absoluteUrl, path + "["+mangaNumber+"]" + mangaName.text() + "\\" + i + ".jpg"); // Images to download
+                //
             }
         }
 
@@ -80,6 +80,7 @@ public class WebParser {
         File folder = new File(name);
         if (!folder.exists()) {
             folder.mkdir();
+
         }
     }
 }
