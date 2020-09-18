@@ -14,9 +14,9 @@ import java.io.IOException;
 
 public class WebParser {
 
-    public static void parse(int mangaNumber,String path) throws IOException {
+    public static void parse(int mangaNumber,String path,String pathOfPath) throws IOException {
 
-        setLastNumberFromFile(mangaNumber);
+        setLastNumberFromFile(mangaNumber,pathOfPath);
         Element doc = getPageBody("https://nhentai.net/g/" + mangaNumber + "/"); // Full page URL here
 
         if (doc != null) {
@@ -47,8 +47,8 @@ public class WebParser {
 
     }
 
-    public static void setLastNumberFromFile(int num) throws IOException {
-        Path fileName = Path.of("C:\\Users\\Dima\\IdeaProjects\\NhentaiParser\\src\\main\\lastMangaNumber.txt");
+    public static void setLastNumberFromFile(int num,String path) throws IOException {
+        Path fileName = Path.of(path);
         String content = num+"";
         Files.writeString(fileName,content);
     }
