@@ -16,10 +16,11 @@ public class WebParser {
 
     public static void parse(int mangaNumber,String path,String pathOfPath) throws IOException {
 
-        setLastNumberFromFile(mangaNumber,pathOfPath);
+        
         Element doc = getPageBody("https://nhentai.net/g/" + mangaNumber + "/"); // Full page URL here
 
         if (doc != null) {
+            setLastNumberFromFile(mangaNumber,pathOfPath);
             Elements mangaName = doc.select("h1.title");
             System.out.print("\n" + "["+mangaNumber+"] "+ mangaName.text() + "\n");
             Elements pageAmountElement = doc.select("span.name");
