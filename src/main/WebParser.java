@@ -22,7 +22,8 @@ public class WebParser {
         if (doc != null) {
             setLastNumberFromFile(mangaNumber,pathOfPath);
             Elements mangaName = doc.select("h1.title");
-            System.out.print("\n" + "["+mangaNumber+"] "+ mangaName.text() + "\n");
+            var mangaNameText = formatNameForWindows(mangaName);
+            System.out.print("\n" + "["+mangaNumber+"] "+ mangaNameText + "\n");
             Elements pageAmountElement = doc.select("span.name");
 
             int pageAmount = Integer.parseInt(String.valueOf(pageAmountElement.last().text()));
@@ -36,13 +37,22 @@ public class WebParser {
                 Elements lol = doc1.getElementsContainingText("https://i.nhentai.net/galleries/");
                 if (lol == null) System.out.println("ERROR no picture!!!");
 
-                createFolder(path + "["+ mangaNumber+"]"+  mangaName.text());
+                createFolder(path + "["+ mangaNumber+"]"+  mangaNameText);
                 Element lol2 = lol31.last();
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
-                DownloadFile(absoluteUrl, path + "["+mangaNumber+"]" + mangaName.text() + "\\" + i + ".jpg"); // Images to download
+                DownloadFile(absoluteUrl, path + "["+mangaNumber+"]" + mangaNameText + "\\" + i + ".jpg"); // Images to download
             }
         }
+    }
+
+    public static String formatNameForWindows(Elements mangaName){
+        var mangaNameText = mangaName.text();
+        mangaNameText = mangaNameText.replaceAll("\\?","");
+        mangaNameText = mangaNameText.replaceAll("\\*","");
+        mangaNameText = mangaNameText.replaceAll("\\|","");
+        mangaNameText = mangaNameText.replaceAll("/","");
+        return mangaNameText;
     }
 
     public static void setLastNumberFromFile(int num,String path) throws IOException {
