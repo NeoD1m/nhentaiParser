@@ -13,16 +13,18 @@ import java.nio.file.Path;
 import java.io.IOException;
 
 public class WebParser {
-
+    private static String mangaNameText;
+    //String mangaNameText;
     public static void parse(int mangaNumber,String path,String pathOfPath) throws IOException {
 
-        
-        Element doc = getPageBody("https://nhentai.net/g/" + mangaNumber + "/"); // Full page URL here
+
+        String nLink = "https://nhentai.net/g/";
+        Element doc = getPageBody( nLink+ mangaNumber + "/"); // Full page URL here
 
         if (doc != null) {
             setLastNumberFromFile(mangaNumber,pathOfPath);
             Elements mangaName = doc.select("h1.title");
-            var mangaNameText = formatNameForWindows(mangaName);
+            mangaNameText = formatNameForWindows(mangaName);
             System.out.print("\n" + "["+mangaNumber+"] "+ mangaNameText + "\n");
             Elements pageAmountElement = doc.select("span.name");
 
@@ -30,20 +32,30 @@ public class WebParser {
             System.out.println(pageAmount);
 
             for (int i = 1; i < pageAmount + 1; i++) {
-                Element page = getPageBody("https://nhentai.net/g/" + mangaNumber + "/" + i + "/");
 
-                Document doc1 = Jsoup.connect("https://nhentai.net/g/" + mangaNumber + "/" + i + "/").get();
+                Element page = getPageBody(nLink + mangaNumber + "/" + i + "/");
+
+                Document doc1 = Jsoup.connect(nLink + mangaNumber + "/" + i + "/").get();
                 Elements lol31 = doc1.select("img");
                 Elements lol = doc1.getElementsContainingText("https://i.nhentai.net/galleries/");
                 if (lol == null) System.out.println("ERROR no picture!!!");
 
-                createFolder(path + "["+ mangaNumber+"]"+  mangaNameText);
+
+                String folderName = path + "["+ mangaNumber+"]   "+  mangaNameText;
+
+                createFolder(folderName);
                 Element lol2 = lol31.last();
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
-                DownloadFile(absoluteUrl, path + "["+mangaNumber+"]" + mangaNameText + "\\" + i + ".jpg"); // Images to download
+                DownloadFile(absoluteUrl, folderName + "\\" + i + ".jpg"); // Images to download
             }
+            System.out.println("  Done!");
         }
+    }
+
+    public static String updateInfo(){
+
+        return mangaNameText;
     }
 
     public static String formatNameForWindows(Elements mangaName){
