@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class WebParser {
     private static String mangaNameText;
+    private static boolean isDone = false;
     //String mangaNameText;
     public static void parse(int mangaNumber,String path,String pathOfPath) throws IOException {
 
@@ -30,9 +31,10 @@ public class WebParser {
 
             int pageAmount = Integer.parseInt(String.valueOf(pageAmountElement.last().text()));
             System.out.println(pageAmount);
+            Main.getUi().getProgressBar().setValue(0);
+            Main.getUi().getProgressBar().setMaximum(pageAmount);
 
             for (int i = 1; i < pageAmount + 1; i++) {
-
                 Element page = getPageBody(nLink + mangaNumber + "/" + i + "/");
 
                 Document doc1 = Jsoup.connect(nLink + mangaNumber + "/" + i + "/").get();
@@ -48,13 +50,14 @@ public class WebParser {
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
                 DownloadFile(absoluteUrl, folderName + "\\" + i + ".jpg"); // Images to download
+                Main.getUi().getProgressBar().setValue(Main.getUi().getProgressBar().getValue()+1);
             }
+            isDone = true;
             System.out.println("  Done!");
         }
     }
 
     public static String updateInfo(){
-
         return mangaNameText;
     }
 
@@ -99,7 +102,10 @@ public class WebParser {
         File folder = new File(name);
         if (!folder.exists()) {
             folder.mkdir();
-
         }
+    }
+
+    public static boolean IsDone() {
+        return isDone;
     }
 }
