@@ -30,9 +30,9 @@ public class WebParser {
 
             int pageAmount = Integer.parseInt(String.valueOf(pageAmountElement.last().text()));
             System.out.println(pageAmount);
+            Main.getUi().getProgressBar().setMaximum(pageAmount);
 
             for (int i = 1; i < pageAmount + 1; i++) {
-
                 Element page = getPageBody(nLink + mangaNumber + "/" + i + "/");
 
                 Document doc1 = Jsoup.connect(nLink + mangaNumber + "/" + i + "/").get();
@@ -48,6 +48,7 @@ public class WebParser {
                 String absoluteUrl = lol2.attr("src");
                 System.out.print("=");
                 DownloadFile(absoluteUrl, folderName + "\\" + i + ".jpg"); // Images to download
+                Main.getUi().getProgressBar().setValue(Main.getUi().getProgressBar().getValue()+1);
             }
             System.out.println("  Done!");
         }
@@ -99,7 +100,6 @@ public class WebParser {
         File folder = new File(name);
         if (!folder.exists()) {
             folder.mkdir();
-
         }
     }
 }
