@@ -10,6 +10,7 @@ public class UIContainer extends JFrame {
     private final String BUTTON_NAME = "Button";
     private JProgressBar progressBar;
     private JTextField textField;
+    private static JButton button;
 
     public UIContainer(int width, int height){
         super("nHentai Parser");
@@ -29,7 +30,7 @@ public class UIContainer extends JFrame {
 
         // --- DOWNLOAD BUTTON
         Action action = new SimpleAction();
-        JButton button = new JButton(action);
+        button = new JButton(action);
         button.setName(BUTTON_NAME);
         button.setText("Download");
         button.setMnemonic('D');
@@ -81,5 +82,9 @@ public class UIContainer extends JFrame {
 
     public JTextField getTextField() {
         return textField;
+    }
+
+    public static JButton getButton() {
+        return button;
     }
 }

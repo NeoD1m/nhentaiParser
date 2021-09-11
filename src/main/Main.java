@@ -9,21 +9,19 @@ public class Main {
     static String pathDownloadFolder = "src/main/pathConfig.txt";
     static int mangaNumber = 0;
     static UIContainer ui;
+    static DownloadHandler download;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         ui = new UIContainer(640, 500);
-
-        System.out.println("End");
     }
 
     public static void startDownload() throws InterruptedException {
-        DownloadHandler download = new DownloadHandler();
+        download = new DownloadHandler();
         download.start();
     }
 
     public static String getLastMangaNumberFromFile() throws IOException {
-        Path fileName = Path.of(pathLastMangaNumber);
-        return Files.readString(fileName);
+        return pathLastMangaNumber;
     }
 
     public static String getPath() throws IOException {
@@ -34,7 +32,8 @@ public class Main {
     public static UIContainer getUi() {
         return ui;
     }
-    public static int getMangaNumber (){
+
+    public static int getMangaNumber() {
         mangaNumber = Integer.parseInt(ui.getTextField().getText());
         return mangaNumber;
     }

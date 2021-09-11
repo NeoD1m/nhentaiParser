@@ -19,5 +19,9 @@ public class DownloadHandler extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Interrupted");
         }
+        if (WebParser.IsDone()) {
+            UIContainer.getButton().setEnabled(true);
+            UIContainer.getButton().setText("Download");
+        }
     }
 }
